@@ -1,0 +1,5 @@
+package com.example.swiftcart_admin
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity : FlutterActivity()

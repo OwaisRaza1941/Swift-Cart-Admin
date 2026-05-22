@@ -1,0 +1,67 @@
+ 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:swiftcart_admin/models/product_model.dart';
+import 'package:swiftcart_admin/services/product_services.dart';
+
+class ProductController extends GetxController {
+  final ProductServices _productServices = ProductServices();
+
+  RxBool isLoading = false.obs;
+
+  RxDouble discountValue = 0.0.obs;
+
+  RxString selectedValue = 'S'.obs;
+
+  var sizeList = ['S', 'M', 'L'].obs;
+
+  void updatedValue(String value) {
+    selectedValue.value = value;
+  }
+
+  void loading() => isLoading.value = true;
+  void unLoading() => isLoading.value = false;
+
+  /// Add Product Firebase Firestore
+  Future<void> addProduct(ProductModel product) async {
+    try {
+      /// add Product In Unique Id
+      await _productServices.addProduct(product);
+    } on FirebaseException {
+      rethrow;
+    }
+  }
+
+  /// Get Product Firebase Firestore
+  Stream<List<ProductModel>> getProducts() {
+    return _productServices.getProducts();
+  }
+
+  /// Updated Product Firebase Firestore
+  Future<void> updatedProduct(ProductModel product) async {
+    try {
+      loading();
+
+      /// Updated Product In Unique Id
+      await _productServices.updatedProduct(product);
+    } on FirebaseException {
+      rethrow;
+    } finally {
+      unLoading();
+    }
+  }
+
+  /// Delete Product Firebase Firestore
+  Future<void> deleteProduct(String id) async {
+    try {
+      loading();
+
+      /// Delete Product In Unique Id
+      await _productServices.deleteProduct(id);
+    } on FirebaseException {
+      rethrow;
+    } finally {
+      unLoading();
+    }
+  }
+}
