@@ -32,11 +32,18 @@ class AppStyles {
     color: Colors.red.withOpacity(0.1),
     borderRadius: BorderRadius.circular(14),
   );
+
   static final updateProductFormStyle = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(28),
     boxShadow: [
       BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10),
     ],
+  );
+  static final updatedBtnStyle = ElevatedButton.styleFrom(
+    backgroundColor: Color(0xff4F46E5),
+    padding: EdgeInsets.symmetric(vertical: 18),
+
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
   );
 }

@@ -6,28 +6,34 @@ class TotalProductsOutOfStock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: dashboardCard(
-            title: "Total Products",
-            value: "120",
-            icon: Icons.shopping_bag_outlined,
-            color: Color(0xff4F46E5),
-          ),
-        ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        bool isSmall = constraints.maxWidth < 600;
 
-        SizedBox(width: 15),
+        return Row(
+          children: [
+            Expanded(
+              child: dashboardCard(
+                title: "Total Products",
+                value: "120",
+                icon: Icons.shopping_bag_outlined,
+                color: Color(0xff4F46E5),
+              ),
+            ),
 
-        Expanded(
-          child: dashboardCard(
-            title: "Out of Stock",
-            value: "08",
-            icon: Icons.warning_amber_rounded,
-            color: Colors.redAccent,
-          ),
-        ),
-      ],
+            SizedBox(width: isSmall ? 10 : 15),
+
+            Expanded(
+              child: dashboardCard(
+                title: "Out of Stock",
+                value: "08",
+                icon: Icons.warning_amber_rounded,
+                color: Colors.redAccent,
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -22,7 +22,7 @@ class AddProductScreen extends StatelessWidget {
     ProductController controller = Get.find<ProductController>();
 
     return Scaffold(
-      backgroundColor: const Color(0xffF5F7FB),
+      backgroundColor: Color(0xffF5F7FB),
 
       appBar: AppBar(
         elevation: 0,

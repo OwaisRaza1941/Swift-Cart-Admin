@@ -24,7 +24,6 @@ class ProductScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-
           child: Column(
             children: [
               /// =========================

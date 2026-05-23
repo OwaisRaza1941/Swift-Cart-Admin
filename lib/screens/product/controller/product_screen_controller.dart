@@ -53,8 +53,8 @@ class ProductController extends GetxController {
 
       /// Updated Product In Unique Id
       await _productServices.updatedProduct(product);
-    } on FirebaseException {
-      rethrow;
+    } catch (e) {
+      print('Error Updated Product:$e');
     } finally {
       unLoading();
     }

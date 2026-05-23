@@ -1,11 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:swiftcart_admin/models/product_model.dart';
 import 'package:swiftcart_admin/screens/product/controller/product_screen_controller.dart';
 import 'package:swiftcart_admin/screens/product/update/update_product.dart';
 import 'package:swiftcart_admin/utils/constants/app_styles.dart';
-import 'package:swiftcart_admin/utils/constants/text_styles.dart';
 import 'package:swiftcart_admin/widgets/custom_button.dart';
 import 'package:swiftcart_admin/widgets/custom_outlinebutton.dart';
 
@@ -15,164 +13,205 @@ class ProductCardList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductController controller = Get.find<ProductController>();
+    final controller = Get.find<ProductController>();
 
-    return Container(
-      padding: EdgeInsets.all(12),
-      decoration: AppStyles.productCardList,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          /// Product Image
-          Expanded(
-            child: Container(
-              width: double.infinity,
-              decoration: AppStyles.productImageDecoration,
-              child: Image.network(
-                productModel.image ?? '',
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-          SizedBox(height: 12),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double w = constraints.maxWidth;
 
-          /// Product Name
-          Text(
-            productModel.name,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 5),
+        // professional scaling system
+        double scale = (w / 260).clamp(0.8, 1.2);
 
-          Text(
-            productModel.category,
-            style: TextStyle(color: Colors.grey, fontSize: 13),
-          ),
-          SizedBox(height: 10),
+        double nameSize = 15 * scale;
+        double categorySize = 12 * scale;
+        double priceSize = 16 * scale;
+        double iconSize = 18 * scale;
+        double buttonHeight = 36 * scale;
 
-          /// Price + Stock
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        return Container(
+          padding: EdgeInsets.all(12 * scale),
+          decoration: AppStyles.productCardList,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "PKR ${productModel.price} ",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff4F46E5),
-                ),
-              ),
-
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: AppStyles.productStockStyle,
-                child: Text(
-                  "In Stock",
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
+              /// IMAGE
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  decoration: AppStyles.productImageDecoration,
+                  child: Image.network(
+                    productModel.image ?? '',
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
-            ],
-          ),
-          SizedBox(height: 12),
 
-          /// Buttons
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  style: AppStyles.productEditBtnStyle,
-                  onPressed: () {
-                    Get.to(
-                      () => UpdateProductScreen(productModel: productModel),
-                    );
-                  },
-                  child: Text("Edit", style: TextStyle(color: Colors.white)),
+              SizedBox(height: 10 * scale),
+
+              /// NAME
+              Text(
+                productModel.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: nameSize,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(width: 10),
 
-              GestureDetector(
-                onTap: () {
-                  Get.dialog(
-                    Dialog(
-                      child: Container(
-                        padding: EdgeInsets.all(20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
+              SizedBox(height: 4),
 
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+              /// CATEGORY
+              Text(
+                productModel.category,
+                style: TextStyle(
+                  fontSize: categorySize,
+                  color: Colors.grey,
+                ),
+              ),
 
-                          children: [
-                            Text(
-                              'Do you want to delete this product?',
-                              style: AppTextStyle.bodyMedium.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
-                              textAlign: TextAlign.center,
+              SizedBox(height: 8 * scale),
+
+              /// PRICE + STOCK
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Text(
+                      "PKR ${productModel.price}",
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: priceSize,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff4F46E5),
+                      ),
+                    ),
+                  ),
+
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 8 * scale,
+                      vertical: 4 * scale,
+                    ),
+                    decoration: AppStyles.productStockStyle,
+                    child: Text(
+                      "In Stock",
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 11 * scale,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 10 * scale),
+
+              /// ACTIONS (PRO STYLE)
+              Row(
+                children: [
+                  /// EDIT BUTTON (PRIMARY)
+                  Expanded(
+                    child: SizedBox(
+                      height: buttonHeight,
+                      child: ElevatedButton(
+                        style: AppStyles.productEditBtnStyle,
+                        onPressed: () {
+                          Get.to(
+                            () => UpdateProductScreen(
+                              productModel: productModel,
                             ),
-
-                            SizedBox(height: 20),
-
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: CustomOutlineButton(
-                                    borderColor: Colors.grey,
-                                    textColor: Colors.black,
-                                    text: 'Cancel',
-                                    onPressed: () {
-                                      Get.back();
-                                    },
-                                  ),
-                                ),
-
-                                SizedBox(width: 10),
-
-                                Obx(() {
-                                  return Expanded(
-                                    child: CustomButton(
-                                      text: 'Delete',
-                                      onPressed: controller.isLoading.value
-                                          ? null
-                                          : () async {
-                                              await controller.deleteProduct(
-                                                productModel.id!,
-                                              );
-
-                                              Get.back();
-                                            },
-                                      backgroundColor: Colors.red,
-                                      textColor: Colors.white,
-                                    ),
-                                  );
-                                }),
-                              ],
-                            ),
-                          ],
+                          );
+                        },
+                        child: Text(
+                          "Edit",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 13 * scale,
+                          ),
                         ),
                       ),
                     ),
-                  );
-                },
-                child: Container(
-                  padding: EdgeInsets.all(10),
-                  decoration: AppStyles.productDeleteBtnStyle,
-                  child: Icon(Icons.delete_outline, color: Colors.red),
-                ),
+                  ),
+
+                  SizedBox(width: 10),
+
+                  /// DELETE BUTTON (ICON STYLE)
+                  GestureDetector(
+                    onTap: () {
+                      Get.dialog(
+                        Dialog(
+                          child: Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'Delete this product?',
+                                  textAlign: TextAlign.center,
+                                ),
+
+                                SizedBox(height: 20),
+
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: CustomOutlineButton(
+                                        borderColor: Colors.grey,
+                                        textColor: Colors.black,
+                                        text: 'Cancel',
+                                        onPressed: () => Get.back(),
+                                      ),
+                                    ),
+
+                                    SizedBox(width: 10),
+
+                                    Expanded(
+                                      child: Obx(() {
+                                        return CustomButton(
+                                          text: 'Delete',
+                                          backgroundColor: Colors.red,
+                                          textColor: Colors.white,
+                                          onPressed:
+                                              controller.isLoading.value
+                                                  ? null
+                                                  : () async {
+                                                      await controller
+                                                          .deleteProduct(
+                                                        productModel.id!,
+                                                      );
+                                                      Get.back();
+                                                    },
+                                        );
+                                      }),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: buttonHeight,
+                      width: buttonHeight,
+                      decoration:
+                          AppStyles.productDeleteBtnStyle,
+                      child: Icon(
+                        Icons.delete_outline,
+                        color: Colors.red,
+                        size: iconSize,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

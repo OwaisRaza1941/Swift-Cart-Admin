@@ -28,7 +28,7 @@ class ProductServices {
   Future<void> updatedProduct(ProductModel product) async {
     try {
       /// Updated Product In Unique Id
-      await _productCollection.doc().update(product.toMap());
+      await _productCollection.doc(product.id).update(product.toMap());
     } on FirebaseException {
       rethrow;
     }
