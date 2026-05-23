@@ -3,9 +3,9 @@ class ProductModel {
   String name;
   String? image;
   String? description;
-  int discount = 0;
-  List<String>? sizes;
-  double? starRating;
+  double discount;
+  List<String> sizes;
+  double starRating;
   int price;
   String category;
   String? size;
@@ -16,27 +16,44 @@ class ProductModel {
     this.image,
     this.description,
     required this.price,
-    this.discount,
-    this.sizes,
-    this.starRating,
+
+    /// Default Values
+    this.discount = 0.0,
+    this.sizes = const ['S', 'M', 'L'],
+    this.starRating = 0.0,
+
     required this.category,
     this.size,
   });
 
   /// Convert FireStore Data In Product Model Class
-  factory ProductModel.fromMap(Map<String, dynamic> map, String docId) {
+  factory ProductModel.fromMap(
+    Map<String, dynamic> map,
+    String docId,
+  ) {
     return ProductModel(
       id: docId,
+
       name: map['name'] ?? '',
-      price: (map['price'] ?? 0),
-      discount: map['discount'] ?? 0,
-      sizes: map['sizes'] != null ? List<String>.from(map['sizes']) : [],
-      starRating: map['starRating'] != null
-          ? (map['starRating']).toDouble()
-          : null,
+
+      price: map['price'] ?? 0,
+
+      /// int ko double mein convert kar raha hai
+      discount: (map['discount'] ?? 0).toDouble(),
+
+      sizes: map['sizes'] != null
+          ? List<String>.from(map['sizes'])
+          : ['S', 'M', 'L'],
+
+      /// int ko double mein convert kar raha hai
+      starRating: (map['starRating'] ?? 0).toDouble(),
+
       description: map['description'] ?? '',
+
       image: map['image'] ?? '',
+
       category: map['category'] ?? '',
+
       size: map['size'] ?? '',
     );
   }

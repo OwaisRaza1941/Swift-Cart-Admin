@@ -168,9 +168,9 @@ class AddProductScreen extends StatelessWidget {
                         : () async {
                             int price = int.tryParse(priceCtrl.text) ?? 0;
 
-                            int? discount = controller.discountValue.value > 0
-                                ? controller.discountValue.value.toInt()
-                                : null;
+                            // int? discount = controller.discountValue.value > 0
+                            //     ? controller.discountValue.value.toInt()
+                            //     : null;
 
                             ProductModel product = ProductModel(
                               name: nameCtrl.text,
@@ -178,7 +178,7 @@ class AddProductScreen extends StatelessWidget {
                               category: controller.selectedcategoryValue.value,
                               description: desCtrl.text,
                               image: imageCtrl.text,
-                              discount: discount,
+                              discount: controller.discountValue.value,
                               size: controller.selectedSizeValue.value,
                             );
 
