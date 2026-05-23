@@ -17,12 +17,12 @@ class ProductCategories extends StatelessWidget {
           return DropdownButton<String>(
             style: AppTextStyle.bodyMedium,
             underline: SizedBox(),
-            value: controller.selectedValue.value,
-            items: controller.sizeList.map((list) {
+            value: controller.selectedcategoryValue.value,
+            items: controller.categoryList.map((list) {
               return DropdownMenuItem(value: list, child: Text(list));
             }).toList(),
             onChanged: (value) {
-              controller.updatedValue(value!);
+              controller.updatedCategoryValue(value!);
             },
           );
         }),

@@ -5,7 +5,6 @@ import 'package:swiftcart_admin/screens/home/widgets/categories.dart';
 import 'package:swiftcart_admin/screens/home/widgets/discount_slider.dart';
 import 'package:swiftcart_admin/screens/home/widgets/product_size.dart';
 import 'package:swiftcart_admin/screens/product/controller/product_screen_controller.dart';
-import 'package:swiftcart_admin/utils/constants/app_color.dart';
 import 'package:swiftcart_admin/utils/constants/text_styles.dart';
 import 'package:swiftcart_admin/widgets/custom_button.dart';
 import 'package:swiftcart_admin/widgets/custom_text_fields.dart';
@@ -23,31 +22,70 @@ class AddProductScreen extends StatelessWidget {
     ProductController controller = Get.find<ProductController>();
 
     return Scaffold(
+      backgroundColor: const Color(0xffF5F7FB),
+
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundDarkColor,
-        title: Text('Add Product'),
+        elevation: 0,
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.white),
-        titleTextStyle: AppTextStyle.h3.copyWith(color: Colors.white),
+        backgroundColor: Colors.white,
+        title: Text(
+          "Add Product",
+          style: AppTextStyle.h3.copyWith(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        iconTheme: IconThemeData(color: Colors.black),
       ),
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(30),
+
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            constraints: BoxConstraints(maxWidth: 700),
+            margin: EdgeInsets.all(20),
+            padding: EdgeInsets.all(25),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(25),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.06),
+                  blurRadius: 15,
+                  offset: Offset(0, 5),
+                ),
+              ],
+            ),
+
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                /// Header
+                Text(
+                  "Product Information",
+                  style: AppTextStyle.h3.copyWith(fontWeight: FontWeight.bold),
+                ),
+
+                const SizedBox(height: 8),
+
+                Text(
+                  "Fill all product details carefully",
+                  style: AppTextStyle.bodyMedium.copyWith(color: Colors.grey),
+                ),
+
+                const SizedBox(height: 30),
+
+                /// Name + Price
                 Row(
                   children: [
                     Expanded(
                       child: CustomTextFields(
-                        hintText: 'Name',
+                        hintText: 'Product Name',
                         controller: nameCtrl,
                       ),
                     ),
-                    SizedBox(width: 5),
+
+                    const SizedBox(width: 15),
+
                     Expanded(
                       child: CustomTextFields(
                         hintText: 'Price',
@@ -56,43 +94,94 @@ class AddProductScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 15),
+
+                const SizedBox(height: 20),
+
+                /// Description
                 CustomTextFields(hintText: 'Description', controller: desCtrl),
-                SizedBox(height: 15),
-                CustomTextFields(hintText: 'Image', controller: imageCtrl),
-                SizedBox(height: 15),
+
+                const SizedBox(height: 20),
+
+                /// Image
+                CustomTextFields(hintText: 'Image URL', controller: imageCtrl),
+
+                const SizedBox(height: 30),
+
+                /// Category
+                Text(
+                  "Category",
+                  style: AppTextStyle.bodyLarge.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
                 ProductCategories(),
-                SizedBox(height: 15),
+
+                const SizedBox(height: 25),
+
+                /// Size
+                Text(
+                  "Available Sizes",
+                  style: AppTextStyle.bodyLarge.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
                 ProductSize(),
-                SizedBox(height: 10),
+
+                const SizedBox(height: 25),
+
+                /// Discount
+                Text(
+                  "Discount",
+                  style: AppTextStyle.bodyLarge.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
                 DiscountSlider(),
-                SizedBox(height: 10),
+
+                const SizedBox(height: 35),
+
+                /// Button
                 Obx(() {
                   return CustomButton(
                     backgroundColor: controller.isLoading.value
-                        ? AppColors.buttonDisableColor
+                        ? Colors.grey
                         : Colors.black,
+
                     textColor: Colors.white,
                     width: double.infinity,
+
                     text: controller.isLoading.value
                         ? 'Please wait...'
                         : 'Add Product',
+
                     onPressed: controller.isLoading.value
                         ? null
                         : () async {
                             int price = int.tryParse(priceCtrl.text) ?? 0;
+
                             int? discount = controller.discountValue.value > 0
                                 ? controller.discountValue.value.toInt()
                                 : null;
+
                             ProductModel product = ProductModel(
                               name: nameCtrl.text,
                               price: price,
-                              category: controller.selectedValue.value,
+                              category: controller.selectedcategoryValue.value,
                               description: desCtrl.text,
                               image: imageCtrl.text,
                               discount: discount,
-                              size: controller.selectedValue.value,
+                              size: controller.selectedSizeValue.value,
                             );
+
                             await controller.addProduct(product);
 
                             nameCtrl.clear();

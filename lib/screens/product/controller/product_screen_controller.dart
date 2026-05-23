@@ -1,22 +1,31 @@
- 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:swiftcart_admin/models/product_model.dart';
 import 'package:swiftcart_admin/services/product_services.dart';
 
 class ProductController extends GetxController {
+  /// Product Services
   final ProductServices _productServices = ProductServices();
 
+  /// isLoading
   RxBool isLoading = false.obs;
 
   RxDouble discountValue = 0.0.obs;
 
-  RxString selectedValue = 'S'.obs;
+  RxString selectedcategoryValue = 'Shirt'.obs;
+
+  var categoryList = ['Shirt', 'Tshirt', 'Shoes', 'Polo', 'Jeans'].obs;
+
+  RxString selectedSizeValue = 'S'.obs;
 
   var sizeList = ['S', 'M', 'L'].obs;
 
-  void updatedValue(String value) {
-    selectedValue.value = value;
+  void updatedSizeValue(String value) {
+    selectedSizeValue.value = value;
+  }
+
+  void updatedCategoryValue(String value) {
+    selectedcategoryValue.value = value;
   }
 
   void loading() => isLoading.value = true;

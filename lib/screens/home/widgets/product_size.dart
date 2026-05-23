@@ -17,12 +17,12 @@ class ProductSize extends StatelessWidget {
         Obx(() {
           return DropdownButton<String>(
             underline: SizedBox(),
-            value: controller.selectedValue.value,
+            value: controller.selectedSizeValue.value,
             items: controller.sizeList.map((list) {
               return DropdownMenuItem(value: list, child: Text(list));
             }).toList(),
             onChanged: (value) {
-              controller.updatedValue(value!);
+              controller.updatedSizeValue(value!);
             },
           );
         }),

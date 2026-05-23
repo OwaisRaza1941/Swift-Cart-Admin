@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
- 
 import 'package:swiftcart_admin/screens/home/widgets/admin_drawer.dart';
-import 'package:swiftcart_admin/screens/home/widgets/dashborad_cards.dart';
+import 'package:swiftcart_admin/screens/home/widgets/dahborad_topbar.dart';
+import 'package:swiftcart_admin/screens/home/widgets/grid_cards.dart';
 
 class AdminDashboardScreen extends StatelessWidget {
   const AdminDashboardScreen({super.key});
@@ -41,78 +41,11 @@ class AdminDashboardScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       /// Top Bar
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          if (!isDesktop)
-                            Builder(
-                              builder: (context) => IconButton(
-                                onPressed: () {
-                                  Scaffold.of(context).openDrawer();
-                                },
-                                icon: Icon(Icons.menu),
-                              ),
-                            ),
-
-                          Expanded(
-                            child: Text(
-                              "Admin Dashboard",
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Icon(Icons.notifications_none),
-                          ),
-                        ],
-                      ),
-
+                      DashboardTopBar(isDesktop: isDesktop),
                       SizedBox(height: 30),
 
                       /// Statistics Cards
-                      GridView.count(
-                        crossAxisCount: gridCount,
-                        crossAxisSpacing: 15,
-                        mainAxisSpacing: 15,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        childAspectRatio: 1.4,
-                        children: [
-                          DashboardCard(
-                            title: "Users",
-                            value: "1,240",
-                            icon: Icons.people,
-                            color: Colors.blue,
-                          ),
-                          DashboardCard(
-                            title: "Products",
-                            value: "340",
-                            icon: Icons.shopping_bag,
-                            color: Colors.orange,
-                          ),
-                          DashboardCard(
-                            title: "Orders",
-                            value: "890",
-                            icon: Icons.shopping_cart,
-                            color: Colors.green,
-                          ),
-                          DashboardCard(
-                            title: "Revenue",
-                            value: "\$12K",
-                            icon: Icons.attach_money,
-                            color: Colors.purple,
-                          ),
-                        ],
-                      ),
-
+                      GridCards(gridCount: gridCount),
                       SizedBox(height: 30),
 
                       /// Sales Analytics

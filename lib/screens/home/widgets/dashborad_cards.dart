@@ -28,7 +28,7 @@ class DashboardCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(cardPadding),
       decoration: BoxDecoration(
-        color: color,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -45,7 +45,7 @@ class DashboardCard extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(cardPadding * 0.7),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: color,
               borderRadius: BorderRadius.circular(14),
             ),
             child: Icon(icon, color: Colors.white, size: iconSize),
@@ -63,7 +63,6 @@ class DashboardCard extends StatelessWidget {
                   child: Text(
                     value,
                     style: TextStyle(
-                      color: Colors.white,
                       fontSize: valueFont,
                       fontWeight: FontWeight.bold,
                     ),
@@ -75,7 +74,7 @@ class DashboardCard extends StatelessWidget {
                 Text(
                   title,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: Colors.white70, fontSize: titleFont),
+                  style: TextStyle(fontSize: titleFont),
                 ),
               ],
             ),

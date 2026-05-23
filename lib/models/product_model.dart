@@ -3,7 +3,7 @@ class ProductModel {
   String name;
   String? image;
   String? description;
-  int? discount;
+  int discount = 0;
   List<String>? sizes;
   double? starRating;
   int price;

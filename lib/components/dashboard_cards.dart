@@ -12,9 +12,8 @@ Widget dashboardCard({
 }) {
   return Container(
     padding: EdgeInsets.all(18),
-
     decoration: BoxDecoration(
-      color: color,
+      color: Colors.white,
       borderRadius: BorderRadius.circular(22),
     ),
 
@@ -22,9 +21,8 @@ Widget dashboardCard({
       children: [
         Container(
           padding: EdgeInsets.all(12),
-
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.2),
+            color: color,
             borderRadius: BorderRadius.circular(14),
           ),
 
@@ -39,19 +37,12 @@ Widget dashboardCard({
             children: [
               Text(
                 value,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
 
               SizedBox(height: 5),
 
-              Text(
-                title,
-                style: TextStyle(color: Colors.white70, fontSize: 13),
-              ),
+              Text(title, style: TextStyle(fontSize: 13)),
             ],
           ),
         ),
