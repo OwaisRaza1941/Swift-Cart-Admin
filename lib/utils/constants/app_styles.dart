@@ -46,4 +46,17 @@ class AppStyles {
 
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
   );
+
+  static final addProductScreenContainerStyle = BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(30),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(0.06),
+        blurRadius: 25,
+        spreadRadius: 2,
+        offset: Offset(0, 10),
+      ),
+    ],
+  );
 }

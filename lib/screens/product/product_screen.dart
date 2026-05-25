@@ -19,8 +19,7 @@ class ProductScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Color(0xffF5F6FA),
-      // Floating Add Button
-      floatingActionButton: floatingActionButton(),
+
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -99,6 +98,9 @@ class ProductScreen extends StatelessWidget {
           ),
         ),
       ),
+
+      // Floating Add Button
+      floatingActionButton: floatingActionButton(),
     );
   }
 }
