@@ -4,6 +4,7 @@ import 'package:swiftcart_admin/screens/product/controller/product_screen_contro
 import 'package:swiftcart_admin/screens/product/widgets/app_bar.dart';
 import 'package:swiftcart_admin/screens/product/widgets/floating_action_btn.dart';
 import 'package:swiftcart_admin/screens/product/widgets/product_card_list.dart';
+import 'package:swiftcart_admin/screens/product/widgets/product_card_shimmer.dart';
 import 'package:swiftcart_admin/screens/product/widgets/product_search_bar.dart';
 import 'package:swiftcart_admin/screens/product/widgets/total_products_out_of_stock.dart';
 import 'package:swiftcart_admin/utils/constants/text_styles.dart';
@@ -51,7 +52,24 @@ class ProductScreen extends StatelessWidget {
                 builder: (context, snapshot) {
                   /// Loading
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator(color: Colors.purple);
+                    return Expanded(
+                      child: GridView.builder(
+                        itemCount: 6,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: size.width > 900
+                              ? 4
+                              : size.width > 600
+                              ? 3
+                              : 2,
+                          crossAxisSpacing: 15,
+                          mainAxisSpacing: 15,
+                          childAspectRatio: 0.72,
+                        ),
+                        itemBuilder: (context, index) {
+                          return ProductCardShimmer();
+                        },
+                      ),
+                    );
                   }
 
                   if (snapshot.hasError) {

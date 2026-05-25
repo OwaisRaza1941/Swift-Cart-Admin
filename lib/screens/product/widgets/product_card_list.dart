@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:swiftcart_admin/models/product_model.dart';
 import 'package:swiftcart_admin/screens/product/controller/product_screen_controller.dart';
 import 'package:swiftcart_admin/screens/product/update/update_product.dart';
@@ -42,6 +43,26 @@ class ProductCardList extends StatelessWidget {
                   child: Image.network(
                     productModel.image ?? '',
                     fit: BoxFit.contain,
+                    loadingBuilder: (context, child, loadingprogress) {
+                      if (loadingprogress == null) return child;
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey.shade300,
+                        highlightColor: Colors.grey.shade100,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      );
+                    },
+
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: Colors.grey.shade300,
+                        child: Icon(Icons.broken_image),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -64,10 +85,7 @@ class ProductCardList extends StatelessWidget {
               /// CATEGORY
               Text(
                 productModel.category,
-                style: TextStyle(
-                  fontSize: categorySize,
-                  color: Colors.grey,
-                ),
+                style: TextStyle(fontSize: categorySize, color: Colors.grey),
               ),
 
               SizedBox(height: 8 * scale),
@@ -119,9 +137,8 @@ class ProductCardList extends StatelessWidget {
                         style: AppStyles.productEditBtnStyle,
                         onPressed: () {
                           Get.to(
-                            () => UpdateProductScreen(
-                              productModel: productModel,
-                            ),
+                            () =>
+                                UpdateProductScreen(productModel: productModel),
                           );
                         },
                         child: Text(
@@ -173,16 +190,15 @@ class ProductCardList extends StatelessWidget {
                                           text: 'Delete',
                                           backgroundColor: Colors.red,
                                           textColor: Colors.white,
-                                          onPressed:
-                                              controller.isLoading.value
-                                                  ? null
-                                                  : () async {
-                                                      await controller
-                                                          .deleteProduct(
+                                          onPressed: controller.isLoading.value
+                                              ? null
+                                              : () async {
+                                                  await controller
+                                                      .deleteProduct(
                                                         productModel.id!,
                                                       );
-                                                      Get.back();
-                                                    },
+                                                  Get.back();
+                                                },
                                         );
                                       }),
                                     ),
@@ -197,8 +213,7 @@ class ProductCardList extends StatelessWidget {
                     child: Container(
                       height: buttonHeight,
                       width: buttonHeight,
-                      decoration:
-                          AppStyles.productDeleteBtnStyle,
+                      decoration: AppStyles.productDeleteBtnStyle,
                       child: Icon(
                         Icons.delete_outline,
                         color: Colors.red,
