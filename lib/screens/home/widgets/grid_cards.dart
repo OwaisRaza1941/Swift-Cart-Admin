@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:swiftcart_admin/screens/home/widgets/dashborad_cards.dart';
+import 'package:swiftcart_admin/screens/orders/order_screen.dart';
 import 'package:swiftcart_admin/screens/product/product_screen.dart';
 
 class GridCards extends StatelessWidget {
@@ -70,7 +71,7 @@ class GridCards extends StatelessWidget {
 
           onTap: () {
             Get.to(
-              () => ProductScreen(),
+              () => OrdersScreen(),
 
               transition: Transition.downToUp,
 

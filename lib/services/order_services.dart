@@ -44,4 +44,18 @@ class OrderServices {
       rethrow;
     }
   }
+
+  Future<void> updateOrder({
+    required String orderId,
+    required String status,
+    required double riderLat,
+    required double riderLng,
+  }) async {
+    await _orders.doc(orderId).update({
+      "status": status,
+      "riderLat": riderLat,
+      "riderLng": riderLng,
+      "updatedAt": FieldValue.serverTimestamp(),
+    });
+  }
 }

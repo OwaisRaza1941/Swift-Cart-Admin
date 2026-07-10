@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:swiftcart_admin/screens/orders/order_screen.dart';
 import 'package:swiftcart_admin/screens/product/product_screen.dart';
 
 /// Drawer
@@ -38,7 +39,9 @@ class AdminDrawer extends StatelessWidget {
           drawerItem(Icons.shopping_bag, "Products", () {
             Get.to(ProductScreen());
           }),
-          drawerItem(Icons.receipt_long, "Orders", () {}),
+          drawerItem(Icons.receipt_long, "Orders", () {
+            Get.to(OrdersScreen());
+          }),
           drawerItem(Icons.bar_chart, "Analytics", () {}),
           drawerItem(Icons.settings, "Settings", () {}),
 
