@@ -10,8 +10,10 @@ class AdminDashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /// Media Query to get the width of the screen
     final width = MediaQuery.of(context).size.width;
 
+    /// Check if the screen width is greater than 900 pixels to determine if it's a desktop layout
     final bool isDesktop = width > 900;
     final bool isTablet = width > 600;
 
@@ -25,6 +27,7 @@ class AdminDashboardScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Color(0xfff5f7fb),
+
       /// Drawer
       drawer: isDesktop ? null : AdminDrawer(),
 
