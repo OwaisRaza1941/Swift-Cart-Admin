@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:swiftcart_admin/models/product_model.dart';
 import 'package:swiftcart_admin/services/product_services.dart';
@@ -7,8 +8,33 @@ class ProductController extends GetxController {
   /// Product Services
   final ProductServices _productServices = ProductServices();
 
+  late TextEditingController productNameCtrl;
+  late TextEditingController priceCtrl;
+  late TextEditingController categoryCtrl;
+  late TextEditingController desCtrl;
+
+  void init(ProductModel product) {
+    productNameCtrl = TextEditingController(text: product.name);
+
+    priceCtrl = TextEditingController(text: product.price.toString());
+
+    categoryCtrl = TextEditingController(text: product.category);
+
+    desCtrl = TextEditingController(text: product.description);
+  }
+
+  @override
+  void onClose() {
+    productNameCtrl.dispose();
+    priceCtrl.dispose();
+    categoryCtrl.dispose();
+    desCtrl.dispose();
+    super.onClose();
+  }
+
   /// isLoading
   RxBool isLoading = false.obs;
+  RxBool isUpdatedProduct = false.obs;
 
   RxDouble discountValue = 0.0.obs;
 
@@ -49,28 +75,24 @@ class ProductController extends GetxController {
   /// Updated Product Firebase Firestore
   Future<void> updatedProduct(ProductModel product) async {
     try {
-      loading();
+      isUpdatedProduct.value = true;
 
       /// Updated Product In Unique Id
       await _productServices.updatedProduct(product);
     } catch (e) {
       print('Error Updated Product:$e');
     } finally {
-      unLoading();
+      isUpdatedProduct.value = false;
     }
   }
 
   /// Delete Product Firebase Firestore
   Future<void> deleteProduct(String id) async {
     try {
-      loading();
-
       /// Delete Product In Unique Id
       await _productServices.deleteProduct(id);
     } on FirebaseException {
       rethrow;
-    } finally {
-      unLoading();
     }
   }
 }

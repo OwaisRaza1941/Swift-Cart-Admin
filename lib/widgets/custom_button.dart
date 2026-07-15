@@ -14,6 +14,7 @@ class CustomButton extends StatelessWidget {
   final IconData? icon; // icon support
   final String? imagePath; // image support
   final double iconSize;
+  final bool? isLoading;
 
   const CustomButton({
     super.key,
@@ -29,6 +30,7 @@ class CustomButton extends StatelessWidget {
     this.icon,
     this.imagePath,
     this.iconSize = 20,
+    this.isLoading,
   });
 
   @override
@@ -57,6 +59,11 @@ class CustomButton extends StatelessWidget {
             ],
 
             SizedBox(width: sizedBoxedWidht ?? 0),
+
+            isLoading == true
+                ? Center(child: CircularProgressIndicator(strokeWidth: 2))
+                : SizedBox.shrink(),
+
             // Text
             Text(
               text,

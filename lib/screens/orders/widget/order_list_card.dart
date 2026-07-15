@@ -98,7 +98,7 @@ class OrderListCard extends StatelessWidget {
             textColor: Colors.white,
             text: 'Manage Order',
             onPressed: () {
-              Get.to(() => UpdateOrderScreen());
+              Get.to(() => UpdateOrderScreen(order: order));
             },
           ),
         ],

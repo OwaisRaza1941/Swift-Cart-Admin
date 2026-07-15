@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swiftcart_admin/models/order_model.dart';
 import 'package:swiftcart_admin/screens/orders/widget/map_preview.dart';
 import 'package:swiftcart_admin/screens/orders/widget/order_info.dart';
 import 'package:swiftcart_admin/screens/orders/widget/update_order.dart';
@@ -6,7 +7,9 @@ import 'package:swiftcart_admin/widgets/custom_appbar.dart';
 import 'package:swiftcart_admin/widgets/custom_button.dart';
 
 class UpdateOrderScreen extends StatelessWidget {
-  const UpdateOrderScreen({super.key});
+  final OrderModel order;
+
+  const UpdateOrderScreen({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class UpdateOrderScreen extends StatelessWidget {
                   ///===========================
                   /// ORDER INFORMATION
                   ///===========================
-                  OrderInformation(),
+                  OrderInformation(order: order),
 
                   ///==================================
                   /// UPDATE ORDER

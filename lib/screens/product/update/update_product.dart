@@ -6,7 +6,7 @@ import 'package:swiftcart_admin/screens/product/update/widgets/app_bar.dart';
 import 'package:swiftcart_admin/screens/product/update/widgets/center_image.dart';
 import 'package:swiftcart_admin/screens/product/update/widgets/status_section.dart';
 import 'package:swiftcart_admin/screens/product/update/widgets/updated_form.dart';
-import 'package:swiftcart_admin/utils/constants/app_styles.dart';
+import 'package:swiftcart_admin/widgets/custom_button.dart';
 
 class UpdateProductScreen extends StatelessWidget {
   final ProductModel productModel;
@@ -17,18 +17,6 @@ class UpdateProductScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     String price = productModel.price.toString();
-
-    TextEditingController productNameCtrl = TextEditingController(
-      text: productModel.name,
-    );
-    TextEditingController priceController = TextEditingController(text: price);
-
-    TextEditingController categoryController = TextEditingController(
-      text: productModel.category,
-    );
-    TextEditingController desController = TextEditingController(
-      text: productModel.description,
-    );
 
     ProductController controller = Get.find<ProductController>();
 
@@ -56,10 +44,10 @@ class UpdateProductScreen extends StatelessWidget {
               /// FORM CARD
               /// =========================
               UpdatedForm(
-                productNameCtrl: productNameCtrl,
-                categoryController: categoryController,
-                desController: desController,
-                priceController: priceController,
+                productNameCtrl: controller.productNameCtrl,
+                categoryController: controller.categoryCtrl,
+                desController: controller.desCtrl,
+                priceController: controller.priceCtrl,
               ),
               SizedBox(height: 30),
 
@@ -75,39 +63,28 @@ class UpdateProductScreen extends StatelessWidget {
 
       bottomNavigationBar: Obx(() {
         return Container(
-          width: double.infinity,
-          height: 50,
           padding: EdgeInsets.all(20),
           color: Colors.white,
-          child: ElevatedButton(
-            style: AppStyles.updatedBtnStyle,
-            onPressed: controller.isLoading.value
-                ? null
-                : () async {
-                    int price = int.parse(priceController.text);
-                    ProductModel product = ProductModel(
-                      id: productModel.id,
-                      name: productNameCtrl.text,
-                      price: price,
-                      category: categoryController.text,
-                      description: desController.text,
-                      image: productModel.image,
-                      size: productModel.size,
-                      sizes: productModel.sizes,
-                    );
-                    await controller.updatedProduct(product);
-                    Get.back();
-                  },
-            child: controller.isLoading.value
-                ? SizedBox(child: CircularProgressIndicator())
-                : Text(
-                    "Update Product",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+          child: CustomButton(
+            backgroundColor: Color(0xff4F46E5),
+            textColor: Colors.white,
+            text: 'Updated',
+            isLoading: controller.isUpdatedProduct.value,
+            onPressed: () async {
+              int price = int.parse(controller.priceCtrl.text);
+              ProductModel product = ProductModel(
+                id: productModel.id,
+                name: controller.productNameCtrl.text,
+                price: price,
+                category: controller.categoryCtrl.text,
+                description: controller.desCtrl.text,
+                image: productModel.image,
+                size: productModel.size,
+                sizes: productModel.sizes,
+              );
+              await controller.updatedProduct(product);
+              Get.back();
+            },
           ),
         );
       }),

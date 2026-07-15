@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:swiftcart_admin/components/build_row.dart';
+import 'package:swiftcart_admin/models/order_model.dart';
 
 class OrderInformation extends StatelessWidget {
-  const OrderInformation({super.key});
+  final OrderModel order;
+
+  const OrderInformation({super.key, required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -28,29 +31,33 @@ class OrderInformation extends StatelessWidget {
               ),
               SizedBox(height: 25),
 
-              buildRow(Icons.confirmation_number, "Order ID", "#ORD-10245"),
+              buildRow(
+                Icons.confirmation_number,
+                "Order ID",
+                "#${order.orderId}",
+              ),
               Divider(height: 30),
 
-              buildRow(Icons.person, "Customer", "Owais Raza"),
+              buildRow(Icons.person, "Customer", order.userName),
               Divider(height: 30),
 
-              buildRow(Icons.phone, "Phone", "+92 300 1234567"),
+              buildRow(Icons.phone, "Phone", order.userPhone),
               Divider(height: 30),
 
               buildRow(
                 Icons.location_on,
                 "Delivery Address",
-                "Gulshan-e-Iqbal Block 13 Karachi",
+                order.deliveryAddress,
               ),
               Divider(height: 30),
 
-              buildRow(Icons.payments, "Payment", "Cash On Delivery"),
+              buildRow(Icons.payments, "Payment", order.paymentMethod),
               Divider(height: 30),
 
               buildRow(Icons.shopping_bag, "Items", "4 Products"),
               Divider(height: 30),
 
-              buildRow(Icons.currency_rupee, "Total", "PKR 4,500"),
+              buildRow(Icons.currency_rupee, "Total", "PKR ${order.total}"),
             ],
           ),
         ),
