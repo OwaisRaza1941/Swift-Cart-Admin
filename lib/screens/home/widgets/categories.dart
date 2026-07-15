@@ -15,7 +15,7 @@ class ProductCategories extends StatelessWidget {
         Text('Category', style: AppTextStyle.h3),
         Obx(() {
           return DropdownButton<String>(
-            style: AppTextStyle.bodyMedium,
+            style: AppTextStyle.bodyMedium.copyWith(color: Colors.grey),
             underline: SizedBox(),
             value: controller.selectedcategoryValue.value,
             items: controller.categoryList.map((list) {

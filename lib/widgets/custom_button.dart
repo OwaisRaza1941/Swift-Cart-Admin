@@ -39,7 +39,7 @@ class CustomButton extends StatelessWidget {
       width: double.infinity,
       height: 50,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: isLoading == true ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           shape: RoundedRectangleBorder(
@@ -58,10 +58,15 @@ class CustomButton extends StatelessWidget {
               SizedBox(width: 8),
             ],
 
-            SizedBox(width: sizedBoxedWidht ?? 0),
-
             isLoading == true
-                ? Center(child: CircularProgressIndicator(strokeWidth: 2))
+                ? SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  )
                 : SizedBox.shrink(),
 
             // Text

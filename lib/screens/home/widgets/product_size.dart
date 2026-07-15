@@ -1,4 +1,3 @@
- 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:swiftcart_admin/screens/product/controller/product_screen_controller.dart';
@@ -16,6 +15,7 @@ class ProductSize extends StatelessWidget {
         Text('Size', style: AppTextStyle.h3),
         Obx(() {
           return DropdownButton<String>(
+            style: AppTextStyle.bodySmall.copyWith(color: Colors.grey),
             underline: SizedBox(),
             value: controller.selectedSizeValue.value,
             items: controller.sizeList.map((list) {

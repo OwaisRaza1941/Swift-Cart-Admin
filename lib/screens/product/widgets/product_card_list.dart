@@ -5,8 +5,7 @@ import 'package:swiftcart_admin/models/product_model.dart';
 import 'package:swiftcart_admin/screens/product/controller/product_screen_controller.dart';
 import 'package:swiftcart_admin/screens/product/update/update_product.dart';
 import 'package:swiftcart_admin/utils/constants/app_styles.dart';
-import 'package:swiftcart_admin/widgets/custom_button.dart';
-import 'package:swiftcart_admin/widgets/custom_outlinebutton.dart';
+import 'package:swiftcart_admin/utils/constants/text_styles.dart';
 
 class ProductCardList extends StatelessWidget {
   final ProductModel productModel;
@@ -59,7 +58,10 @@ class ProductCardList extends StatelessWidget {
 
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
-                        color: Colors.grey.shade300,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
                         child: Icon(Icons.broken_image),
                       );
                     },
@@ -159,46 +161,122 @@ class ProductCardList extends StatelessWidget {
                     onTap: () {
                       Get.dialog(
                         Dialog(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                           child: Padding(
-                            padding: EdgeInsets.all(20),
+                            padding: EdgeInsets.all(24),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
-                                  'Delete this product?',
-                                  textAlign: TextAlign.center,
+                                Container(
+                                  height: 70,
+                                  width: 70,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red.withOpacity(.1),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.delete_outline_rounded,
+                                    color: Colors.red,
+                                    size: 38,
+                                  ),
                                 ),
-
                                 SizedBox(height: 20),
+
+                                Text(
+                                  "Delete Product",
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+
+                                Text(
+                                  "Are you sure you want to delete this product?\nThis action cannot be undone.",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.grey.shade700,
+                                    height: 1.5,
+                                  ),
+                                ),
+                                SizedBox(height: 30),
 
                                 Row(
                                   children: [
                                     Expanded(
-                                      child: CustomOutlineButton(
-                                        borderColor: Colors.grey,
-                                        textColor: Colors.black,
-                                        text: 'Cancel',
+                                      child: OutlinedButton(
+                                        style: OutlinedButton.styleFrom(
+                                          minimumSize: Size.fromHeight(50),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                              12,
+                                            ),
+                                          ),
+                                        ),
                                         onPressed: () => Get.back(),
+                                        child: Text(
+                                          "Cancel",
+                                          style: AppTextStyle.buttonMedium,
+                                        ),
                                       ),
                                     ),
 
-                                    SizedBox(width: 10),
+                                    SizedBox(width: 12),
 
                                     Expanded(
                                       child: Obx(() {
-                                        return CustomButton(
-                                          text: 'Delete',
-                                          backgroundColor: Colors.red,
-                                          textColor: Colors.white,
+                                        return ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.red,
+                                            minimumSize: Size.fromHeight(50),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                          ),
                                           onPressed: controller.isLoading.value
                                               ? null
                                               : () async {
+                                                  controller.loading();
+
                                                   await controller
                                                       .deleteProduct(
                                                         productModel.id!,
                                                       );
+
+                                                  controller.unLoading();
+
                                                   Get.back();
+
+                                                  Get.snackbar(
+                                                    "Success",
+                                                    "Product deleted successfully.",
+                                                    snackPosition:
+                                                        SnackPosition.BOTTOM,
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                    colorText: Colors.white,
+                                                  );
                                                 },
+                                          child: controller.isLoading.value
+                                              ? SizedBox(
+                                                  height: 22,
+                                                  width: 22,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                        strokeWidth: 2,
+                                                        color: Colors.white,
+                                                      ),
+                                                )
+                                              : Text(
+                                                  "Delete",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
                                         );
                                       }),
                                     ),

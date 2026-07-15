@@ -35,6 +35,7 @@ class ProductController extends GetxController {
   /// isLoading
   RxBool isLoading = false.obs;
   RxBool isUpdatedProduct = false.obs;
+  RxBool isAddProduct = false.obs;
 
   RxDouble discountValue = 0.0.obs;
 
@@ -60,10 +61,14 @@ class ProductController extends GetxController {
   /// Add Product Firebase Firestore
   Future<void> addProduct(ProductModel product) async {
     try {
+      isAddProduct.value = true;
+
       /// add Product In Unique Id
       await _productServices.addProduct(product);
     } on FirebaseException {
       rethrow;
+    } finally {
+      isAddProduct.value = false;
     }
   }
 
