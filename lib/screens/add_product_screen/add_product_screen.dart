@@ -106,6 +106,7 @@ class AddProductScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 14),
 
+                      /// Product Size
                       ProductSize(),
                       SizedBox(height: 28),
 
@@ -167,7 +168,7 @@ class AddProductScreen extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
+            ),  
           ),
         ),
       ),
