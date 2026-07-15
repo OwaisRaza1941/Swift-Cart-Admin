@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:get/get.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:swiftcart_admin/models/order_model.dart';
+import 'package:swiftcart_admin/screens/orders/controller/order_controller.dart';
 
 class MapPreview extends StatelessWidget {
-  const MapPreview({super.key});
+  final OrderModel order;
+
+  MapPreview({super.key, required this.order});
+
+  final OrderController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -21,55 +30,81 @@ class MapPreview extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 "Rider Location",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
 
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
-              Container(
-                height: 300,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.grey.shade400),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.map, size: 70, color: Colors.indigo),
-
-                    SizedBox(height: 15),
-
-                    Text(
-                      "Flutter Map Preview",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+              SizedBox(
+                height: 320,
+                child: Obx(() {
+                  return FlutterMap(
+                    mapController: controller.mapController,
+                    options: MapOptions(
+                      initialCenter: LatLng(
+                        order.deliveryLat,
+                        order.deliveryLng,
                       ),
+                      initialZoom: 15,
+
+                      onTap: (_, point) {
+                        controller.onMapTap(point);
+                      },
                     ),
 
-                    SizedBox(height: 8),
+                    children: [
+                      TileLayer(
+                        urlTemplate:
+                            'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+                        subdomains: ['a', 'b', 'c', 'd'],
+                        userAgentPackageName: 'com.example.swiftcart_admin',
+                      ),
 
-                    Text(
-                      "Map will be added later",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
-                ),
+                      MarkerLayer(
+                        markers: [
+                          /// Customer Marker
+                          Marker(
+                            point: LatLng(order.deliveryLat, order.deliveryLng),
+                            width: 45,
+                            height: 45,
+                            child:   Icon(
+                              Icons.location_pin,
+                              color: Colors.red,
+                              size: 45,
+                            ),
+                          ),
+
+                          /// Rider Marker
+                          if (controller.riderLocation.value != null)
+                            Marker(
+                              point: controller.riderLocation.value!,
+                              width: 45,
+                              height: 45,
+                              child:   Icon(
+                                Icons.delivery_dining,
+                                color: Colors.blue,
+                                size: 40,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ],
+                  );
+                }),
               ),
-
               SizedBox(height: 20),
 
               SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: OutlinedButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.location_searching),
-                  label: Text("Pick Rider Location"),
+                  onPressed: () async {
+                    await controller.getCurrentLocation();
+                  },
+                  icon:   Icon(Icons.my_location),
+                  label:   Text("Use Current GPS"),
                   style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

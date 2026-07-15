@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:swiftcart_admin/models/order_model.dart';
+import 'package:swiftcart_admin/screens/orders/controller/order_controller.dart';
 import 'package:swiftcart_admin/screens/orders/widget/map_preview.dart';
 import 'package:swiftcart_admin/screens/orders/widget/order_info.dart';
 import 'package:swiftcart_admin/screens/orders/widget/update_order.dart';
@@ -9,7 +11,9 @@ import 'package:swiftcart_admin/widgets/custom_button.dart';
 class UpdateOrderScreen extends StatelessWidget {
   final OrderModel order;
 
-  const UpdateOrderScreen({super.key, required this.order});
+  UpdateOrderScreen({super.key, required this.order});
+
+  final OrderController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +40,12 @@ class UpdateOrderScreen extends StatelessWidget {
                   ///==================================
                   /// UPDATE ORDER
                   ///==================================
-                  UpdateOrder(),
+                  UpdateOrder(order: order),
 
                   ///==================================
                   /// MAP PREVIEW
                   ///==================================
-                  MapPreview(),
+                  MapPreview(order: order),
 
                   ///==================================
                   /// UPDATE BUTTON
@@ -52,7 +56,13 @@ class UpdateOrderScreen extends StatelessWidget {
                     text: 'Update Order',
                     icon: Icons.save,
                     sizedBoxedWidht: 8,
-                    onPressed: () {},
+                    onPressed: () async {
+                      await controller.updateOrder(
+                        orderId: order.orderId!,
+
+                        status: controller.selectedStatus.value,
+                      );
+                    },
                   ),
                 ],
               ),

@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:swiftcart_admin/models/order_model.dart';
+import 'package:swiftcart_admin/screens/orders/controller/order_controller.dart';
 
 class UpdateOrder extends StatelessWidget {
-  const UpdateOrder({super.key});
+  final OrderModel order;
 
+  UpdateOrder({super.key, required this.order}) {
+    controller.selectedStatus.value = order.status;
+  }
+
+  final OrderController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,72 +37,39 @@ class UpdateOrder extends StatelessWidget {
               SizedBox(height: 25),
 
               /// Status
-              DropdownButtonFormField<String>(
-                value: "pending",
-                decoration: InputDecoration(
-                  labelText: "Order Status",
-                  prefixIcon: const Icon(Icons.local_shipping),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                items: const [
-                  DropdownMenuItem(value: "pending", child: Text("Pending")),
-
-                  DropdownMenuItem(
-                    value: "confirmed",
-                    child: Text("Confirmed"),
-                  ),
-
-                  DropdownMenuItem(value: "packing", child: Text("Packing")),
-
-                  DropdownMenuItem(
-                    value: "on_the_way",
-                    child: Text("On The Way"),
-                  ),
-
-                  DropdownMenuItem(
-                    value: "delivered",
-                    child: Text("Delivered"),
-                  ),
-                ],
-                onChanged: (value) {},
-              ),
-
-              SizedBox(height: 20),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "Rider Latitude",
-                        prefixIcon: Icon(Icons.my_location),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
+              Obx(() {
+                return DropdownButtonFormField<String>(
+                  value: controller.selectedStatus.value,
+                  decoration: InputDecoration(
+                    labelText: "Order Status",
+                    prefixIcon: const Icon(Icons.local_shipping),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-
-                  SizedBox(width: 20),
-
-                  Expanded(
-                    child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: "Rider Longitude",
-                        prefixIcon: Icon(Icons.location_on),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
+                  items: const [
+                    DropdownMenuItem(value: "pending", child: Text("Pending")),
+                    DropdownMenuItem(
+                      value: "confirmed",
+                      child: Text("Confirmed"),
                     ),
-                  ),
-                ],
-              ),
-
+                    DropdownMenuItem(value: "packing", child: Text("Packing")),
+                    DropdownMenuItem(
+                      value: "on_the_way",
+                      child: Text("On The Way"),
+                    ),
+                    DropdownMenuItem(
+                      value: "delivered",
+                      child: Text("Delivered"),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) {
+                      controller.changeStatus(value);
+                    }
+                  },
+                );
+              }),
               SizedBox(height: 25),
 
               Container(

@@ -49,7 +49,7 @@ class OrderModel {
       userName: map['userName'],
       userPhone: map['userPhone'],
       deliveryAddress: map['deliveryAddress'],
-      deliveryLat: (map['deliveryLat'] as num).toDouble(),
+      deliveryLat: (map['deliveryLat'] as num).toDouble(),  
       deliveryLng: (map['deliveryLng'] as num).toDouble(),
       paymentMethod: map['paymentMethod'],
       // items: (map['items'] as List? ?? [])
