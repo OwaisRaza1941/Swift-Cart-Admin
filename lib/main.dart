@@ -8,6 +8,7 @@ import 'package:swiftcart_admin/screens/home/home_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  /// Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   InitialBindings().dependencies();
 

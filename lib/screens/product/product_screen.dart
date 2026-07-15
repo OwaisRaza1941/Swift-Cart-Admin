@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:swiftcart_admin/screens/product/controller/product_screen_controller.dart';
-import 'package:swiftcart_admin/screens/product/widgets/app_bar.dart';
+import 'package:swiftcart_admin/widgets/custom_appbar.dart';
 import 'package:swiftcart_admin/screens/product/widgets/floating_action_btn.dart';
 import 'package:swiftcart_admin/screens/product/widgets/product_card_list.dart';
 import 'package:swiftcart_admin/screens/product/widgets/product_card_shimmer.dart';
@@ -29,7 +29,7 @@ class ProductScreen extends StatelessWidget {
               /// =========================
               /// TOP BAR
               /// =========================
-              ProductAppBar(),
+              CustomAppBar(title: 'Products'),
               SizedBox(height: 25),
 
               /// =========================

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-class ProductAppBar extends StatelessWidget {
-  const ProductAppBar({super.key});
+class CustomAppBar extends StatelessWidget {
+  final String title;
+  const CustomAppBar({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -9,16 +10,13 @@ class ProductAppBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "Products",
+          title,
           style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
         ),
-
         Row(
           children: [
             iconBox(Icons.notifications_none),
-
             SizedBox(width: 12),
-
             iconBox(Icons.settings_outlined),
           ],
         ),
@@ -33,14 +31,11 @@ class ProductAppBar extends StatelessWidget {
 Widget iconBox(IconData icon) {
   return Container(
     padding: EdgeInsets.all(10),
-
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.circular(15),
-
       boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 8)],
     ),
-
     child: Icon(icon),
   );
 }
