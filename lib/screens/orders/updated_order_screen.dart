@@ -3,6 +3,7 @@ import 'package:swiftcart_admin/screens/orders/widget/map_preview.dart';
 import 'package:swiftcart_admin/screens/orders/widget/order_info.dart';
 import 'package:swiftcart_admin/screens/orders/widget/update_order.dart';
 import 'package:swiftcart_admin/widgets/custom_appbar.dart';
+import 'package:swiftcart_admin/widgets/custom_button.dart';
 
 class UpdateOrderScreen extends StatelessWidget {
   const UpdateOrderScreen({super.key});
@@ -42,28 +43,13 @@ class UpdateOrderScreen extends StatelessWidget {
                   ///==================================
                   /// UPDATE BUTTON
                   ///==================================
-                  SizedBox(
-                    width: double.infinity,
-                    height: 55,
-                    child: ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: Icon(Icons.save, color: Colors.white),
-                      label: Text(
-                        "Update Order",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff6366F1),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                      ),
-                    ),
+                  CustomButton(
+                    backgroundColor: Color(0xff6366F1),
+                    textColor: Colors.white,
+                    text: 'Update Order',
+                    icon: Icons.save,
+                    sizedBoxedWidht: 8,
+                    onPressed: () {},
                   ),
                 ],
               ),
